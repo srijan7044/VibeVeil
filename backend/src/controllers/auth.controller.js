@@ -1,8 +1,9 @@
 import { sendWelcomeEmail } from "../emails/emailHandlers.js";
+import { ENV } from "../lib/env.js";
 import { generateToken } from "../lib/utils.js";
 import User from "../models/User.js";
 import bcrypt from "bcryptjs";
-import "dotenv/config.js";
+
 
 export const signup = async (req, res) => {
   const { fullName, email, password } = req.body;
@@ -50,7 +51,11 @@ export const signup = async (req, res) => {
       // todo: send welcome email to the user after successful signup
 
       try {
-        await sendWelcomeEmail(saveUser.email, saveUser.fullName, process.env.CLIENT_URL);
+        await sendWelcomeEmail(
+          saveUser.email,
+          saveUser.fullName,
+          ENV.CLIENT_URL,
+        );
       } catch (error) {
         console.error("failed to send welcome email:", error);
       }
@@ -59,6 +64,6 @@ export const signup = async (req, res) => {
     }
   } catch (error) {
     console.log("Error during signup:", error);
-     res.status(500).json({ message: "internal server error" });
+    res.status(500).json({ message: "internal server error" });
   }
 };
