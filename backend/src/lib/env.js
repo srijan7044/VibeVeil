@@ -9,17 +9,7 @@ export const ENV = {
   EMAIL_FROM: process.env.EMAIL_FROM,
   EMAIL_FROM_NAME: process.env.EMAIL_FROM_NAME,
   CLIENT_URL: process.env.CLIENT_URL,
+  CLOUDINARY_CLOUD_NAME: process.env.CLOUDINARY_CLOUD_NAME,
+  CLOUDINARY_API_KEY: process.env.CLOUDINARY_API_KEY,
+  CLOUDINARY_API_SECRET: process.env.CLOUDINARY_API_SECRET,
 };
-
-
-// PORT=3000
-// MONGODB_URI=mongodb+srv://offsray7044_db_user:8Ps8Ns9QygozIgdg@cluster0.xe5bt4r.mongodb.net/VibeVeil_db?appName=Cluster0
-// NODE_ENV=production
-// JWT_SECRET=your_jwt_secret_key
-
-// RESEND_API_KEY=re_ZxwmGvxG_EKuJ3g5jqhvTSPmQdfiGmu7D
-
-// EMAIL_FROM="onboarding@resend.dev"
-// EMAIL_FROM_NAME="VibeVeil Team"
-
-// CLIENT_URL=http://localhost:5173A
