@@ -1,14 +1,4 @@
-import React from 'react'
-
 function ChatPage() {
-// const {authUser,isLoading,LoginPage}=useAuthStore();
-
-  return  (
-    <div className="chat-page">
-      <h1>Chat Page</h1>
-    </div>
-  )
+  return <div>ChatPage</div>;
 }
-
-export default ChatPage
-  
+export default ChatPage;

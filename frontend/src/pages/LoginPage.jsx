@@ -1,13 +1,4 @@
-import React from 'react'
-
 function LoginPage() {
-  // const {authUser,isLoading,LoginPage}=useAuthStore();
-  
-  return (
-<div className="login-page z-10">
-    
-    </div>
-  )
+  return <div>login page</div>;
 }
-
-export default LoginPage
+export default LoginPage;
