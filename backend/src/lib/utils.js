@@ -7,7 +7,7 @@ export const generateToken = (userID, res) => {
     throw new Error("JWT_SECRET is not defined in environment variables");
   }
   //create a token with the userID as payload and set it as an HTTP-only cookie
-  const token = jwt.sign({ userID}, JWT_SECRET, {
+  const token = jwt.sign({ userID:userID}, JWT_SECRET, {
     expiresIn: "7d",
   });
   res.cookie("jwt", token, {
