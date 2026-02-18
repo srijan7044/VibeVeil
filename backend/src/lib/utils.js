@@ -18,5 +18,6 @@ export const generateToken = (userID, res) => {
   });
   return token;
 };
+
 //http;localhost
 //https://vibeveil.com
