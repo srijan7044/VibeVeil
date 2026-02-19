@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useAuthStore } from "../store/useAuthStore";
 import { useChatStore } from "../store/useChatStore";
 import ChatHeader from "./ChatHeader";
@@ -16,7 +16,11 @@ function ChatContainer() {
     unsubscribeFromMessages,
   } = useChatStore();
   const { authUser } = useAuthStore();
+  const { socket } = useAuthStore();
+  const [isTyping, setIsTyping] = useState(false);
+
   const messageEndRef = useRef(null);
+  const typingTimeoutRef = useRef(null);
 
   useEffect(() => {
     getMessagesByUserId(selectedUser._id);
@@ -31,6 +35,38 @@ function ChatContainer() {
       messageEndRef.current.scrollIntoView({ behavior: "smooth" });
     }
   }, [messages]);
+
+
+  useEffect(() => {
+  if (!socket || !selectedUser) return;
+
+  const handleUserTyping = ({ senderId }) => {
+    if (senderId === selectedUser._id) {
+      setIsTyping(true);
+
+       clearTimeout(typingTimeoutRef.current);
+    typingTimeoutRef.current = setTimeout(() => {
+      setIsTyping(false);
+    }, 2000);
+
+    }
+  };
+
+  const handleUserStoppedTyping = ({ senderId }) => {
+    if (senderId === selectedUser._id) {
+      setIsTyping(false);
+    }
+  };
+
+  socket.on("userTyping", handleUserTyping);
+  socket.on("userStoppedTyping", handleUserStoppedTyping);
+
+  return () => {
+    socket.off("userTyping", handleUserTyping);
+    socket.off("userStoppedTyping", handleUserStoppedTyping);
+  };
+}, [socket, selectedUser]);
+
 
 
 
@@ -79,6 +115,18 @@ function ChatContainer() {
           <NoChatHistoryPlaceholder name={selectedUser.fullName} />
         )}
       </div>
+   {isTyping && (
+  <div className="px-6 pb-2">
+    <div className="max-w-3xl mx-auto flex items-center gap-1 text-sm text-slate-400">
+      <span>{selectedUser.fullName} is typing</span>
+      <span className="animate-bounce">.</span>
+      <span className="animate-bounce delay-100">.</span>
+      <span className="animate-bounce delay-200">.</span>
+    </div>
+  </div>
+)}
+
+      
 
       <MessageInput />
     </>

@@ -20,10 +20,13 @@ if(!decoded){
   return next (new Error ("Unauthorized - Invalid Token"))
 }
 //find the user from db
-const user = await User.findById(decoded.userID).select("-password");
+const user = await User.findById(decoded.userId).select("-password");
 
 //temporary addon by chat gpt
 // console.log("Decoded:", decoded);
+// console.log("Decoded payload:", decoded);
+// console.log("Searching user with ID:", decoded.userID);
+
 
 
 if (!user){

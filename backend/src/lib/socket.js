@@ -31,7 +31,7 @@ const userSocketMap={}//{userId:socketId}
 io.on("connection", (socket)=>{
   console.log("A User connected", socket.user.fullName)
 
-  const userId = socket.userId
+ const userId = socket.user._id.toString()
   userSocketMap[userId]=socket.id
 
 
@@ -44,6 +44,29 @@ io.on("connection", (socket)=>{
     delete userSocketMap[userId]
     io.emit("getOnlineUsers",Object.keys(userSocketMap));
   })
-})
+
+  socket.on("typing", ({ receiverId }) => {
+  const receiverSocketId = userSocketMap[receiverId];
+
+  if (receiverSocketId) {
+    io.to(receiverSocketId).emit("userTyping", {
+      senderId: socket.user._id.toString(),
+      senderName: socket.user.fullName,
+    });
+  }
+});
+
+socket.on("stopTyping", ({ receiverId }) => {
+  const receiverSocketId = userSocketMap[receiverId];
+
+  if (receiverSocketId) {
+    io.to(receiverSocketId).emit("userStoppedTyping", {
+      senderId: socket.user._id.toString(),
+    });
+  }
+});
+
+
+});
 
 export{io,app,server};
