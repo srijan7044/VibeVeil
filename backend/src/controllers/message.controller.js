@@ -68,16 +68,16 @@ export const sendMessage = async (req, res) => {
     await newMessage.save();
 
     //todo;send message in real time if user online using socket.io
-    const receiverSocketId = getReceiverSocketId(receiverId)
-    if(receiverSocketId){
-      io.to(receiverSocketId).emit("newMessage",newMessage)
+    const receiverSocketId = getReceiverSocketId(receiverId);
+    if (receiverSocketId) {
+      io.to(receiverSocketId).emit("newMessage", newMessage);
     }
-
 
     res.status(201).json(newMessage);
   } catch (error) {
     console.log("Error in sendMessage:", error.message);
-    res.status(500).json({ error: "Internal server error",error });
+    //another line was there .
+    res.status(500).json({ error: error });
   }
 };
 
