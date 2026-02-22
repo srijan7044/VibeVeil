@@ -24,11 +24,16 @@ function ChatContainer() {
 
   useEffect(() => {
     getMessagesByUserId(selectedUser._id);
-    subscribeToMessages()
+    subscribeToMessages();
 
     //clean up
-    return ()=> unsubscribeFromMessages();
-  }, [selectedUser, getMessagesByUserId,subscribeToMessages,unsubscribeFromMessages]);
+    return () => unsubscribeFromMessages();
+  }, [
+    selectedUser,
+    getMessagesByUserId,
+    subscribeToMessages,
+    unsubscribeFromMessages,
+  ]);
 
   useEffect(() => {
     if (messageEndRef.current) {
@@ -36,40 +41,34 @@ function ChatContainer() {
     }
   }, [messages]);
 
-
   useEffect(() => {
-  if (!socket || !selectedUser) return;
+    if (!socket || !selectedUser) return;
 
-  const handleUserTyping = ({ senderId }) => {
-    if (senderId === selectedUser._id) {
-      setIsTyping(true);
+    const handleUserTyping = ({ senderId }) => {
+      if (senderId === selectedUser._id) {
+        setIsTyping(true);
 
-       clearTimeout(typingTimeoutRef.current);
-    typingTimeoutRef.current = setTimeout(() => {
-      setIsTyping(false);
-    }, 2000);
+        clearTimeout(typingTimeoutRef.current);
+        typingTimeoutRef.current = setTimeout(() => {
+          setIsTyping(false);
+        }, 2000);
+      }
+    };
 
-    }
-  };
+    const handleUserStoppedTyping = ({ senderId }) => {
+      if (senderId === selectedUser._id) {
+        setIsTyping(false);
+      }
+    };
 
-  const handleUserStoppedTyping = ({ senderId }) => {
-    if (senderId === selectedUser._id) {
-      setIsTyping(false);
-    }
-  };
+    socket.on("userTyping", handleUserTyping);
+    socket.on("userStoppedTyping", handleUserStoppedTyping);
 
-  socket.on("userTyping", handleUserTyping);
-  socket.on("userStoppedTyping", handleUserStoppedTyping);
-
-  return () => {
-    socket.off("userTyping", handleUserTyping);
-    socket.off("userStoppedTyping", handleUserStoppedTyping);
-  };
-}, [socket, selectedUser]);
-
-
-
-
+    return () => {
+      socket.off("userTyping", handleUserTyping);
+      socket.off("userStoppedTyping", handleUserStoppedTyping);
+    };
+  }, [socket, selectedUser]);
 
   return (
     <>
@@ -96,7 +95,8 @@ function ChatContainer() {
                       className="rounded-lg h-48 object-cover"
                     />
                   )}
-                  {msg.text && <p className="mt-2">{msg.text}</p>}
+                  {/* {msg.text && <p className="mt-2">{msg.text}</p>} */}
+                  {msg.text && <p className="mt-2 break-words">{msg.text}</p>}
                   <p className="text-xs mt-1 opacity-75 flex items-center gap-1">
                     {new Date(msg.createdAt).toLocaleTimeString(undefined, {
                       hour: "2-digit",
@@ -115,18 +115,16 @@ function ChatContainer() {
           <NoChatHistoryPlaceholder name={selectedUser.fullName} />
         )}
       </div>
-   {isTyping && (
-  <div className="px-6 pb-2">
-    <div className="max-w-3xl mx-auto flex items-center gap-1 text-sm text-slate-400">
-      <span>{selectedUser.fullName} is typing</span>
-      <span className="animate-bounce">.</span>
-      <span className="animate-bounce delay-100">.</span>
-      <span className="animate-bounce delay-200">.</span>
-    </div>
-  </div>
-)}
-
-      
+      {isTyping && (
+        <div className="px-6 pb-2">
+          <div className="max-w-3xl mx-auto flex items-center gap-1 text-sm text-slate-400">
+            <span>{selectedUser.fullName} is typing</span>
+            <span className="animate-bounce">.</span>
+            <span className="animate-bounce delay-100">.</span>
+            <span className="animate-bounce delay-200">.</span>
+          </div>
+        </div>
+      )}
 
       <MessageInput />
     </>

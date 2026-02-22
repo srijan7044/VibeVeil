@@ -33,7 +33,7 @@ function ProfileHeader() {
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
           {/* AVATAR */}
-          <div className="avatar online">
+          {/* <div className="avatar online">
             <button
               className="size-14 rounded-full overflow-hidden relative group"
               onClick={() => fileInputRef.current.click()}
@@ -55,6 +55,34 @@ function ProfileHeader() {
               onChange={handleImageUpload}
               className="hidden"
             />
+          </div> */}
+
+          <div className="avatar online">
+            <label className="relative size-14 cursor-pointer block">
+              <img
+                src={selectedImg || authUser.profilePic || "/avatar.png"}
+                alt="User image"
+                className="w-full h-full object-cover rounded-full"
+              />
+
+              {/* Hover Overlay */}
+              <div
+                className="absolute inset-0 rounded-full bg-black/50 
+                    opacity-0 hover:opacity-100 
+                    flex items-center justify-center 
+                    transition-opacity duration-200"
+              >
+                <span className="text-white text-xs">Change</span>
+              </div>
+
+              <input
+                type="file"
+                accept="image/*"
+                ref={fileInputRef}
+                onChange={handleImageUpload}
+                className="hidden"
+              />
+            </label>
           </div>
 
           {/* USERNAME & ONLINE TEXT */}
@@ -83,7 +111,9 @@ function ProfileHeader() {
             onClick={() => {
               // play click sound before toggling
               mouseClickSound.currentTime = 0; // reset to start
-              mouseClickSound.play().catch((error) => console.log("Audio play failed:", error));
+              mouseClickSound
+                .play()
+                .catch((error) => console.log("Audio play failed:", error));
               toggleSound();
             }}
           >
