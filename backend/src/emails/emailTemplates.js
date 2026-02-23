@@ -1,4 +1,7 @@
+
 export function createWelcomeEmailTemplate(name, clientURL) {
+
+  
   return `
   <!DOCTYPE html>
   <html>
@@ -95,3 +98,8 @@ export function createWelcomeEmailTemplate(name, clientURL) {
   </html>
   `;
 }
+const name = "Srijan";
+const clientURL = "https://vibeveil-git-main-kushs-projects-1c4830b0.vercel.app";
+
+const emailHTML = createWelcomeEmailTemplate(name, clientURL);
+console.log(emailHTML); // ✅ This will show your email HTML
