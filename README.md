@@ -79,27 +79,28 @@ Use this section to showcase key screens of the application.
 
 ### Login Page
 
-![Login Page](frontend/public/login.png)
+<img width="1189" height="845" alt="image" src="https://github.com/user-attachments/assets/cc2f5adb-311d-403f-946f-2110184ab320" />
 
 ### Signup Page
 
-![Signup Page](frontend/public/signup.png)
+<img width="1187" height="860" alt="image" src="https://github.com/user-attachments/assets/ad2a2ead-c4a1-48b9-b745-e98676ac1e7d" />
+
+
+### Chat Inbox
+
+Add your chat Inbox screenshot and update the path below.
+
+<img width="1179" height="828" alt="image" src="https://github.com/user-attachments/assets/30f984b5-d2e6-4efc-a206-3ca09ad5c7af" />
 
 ### Chat Page
 
 Add your chat page screenshot and update the path below.
 
-```md
-![Chat Page](frontend/public/chat-page.png)
-```
+<img width="1187" height="823" alt="image" src="https://github.com/user-attachments/assets/2fd721d2-abdd-4057-8542-8230d1cb5944" />
 
-### Profile / Settings Page
 
-Add your profile/settings page screenshot and update the path below.
 
-```md
-![Profile Page](frontend/public/profile-page.png)
-```
+
 
 ## Complete File Structure
 
