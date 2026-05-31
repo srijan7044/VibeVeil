@@ -13,7 +13,8 @@ const io = new Server(server, {
   cors: {
     origin: [
       "http://localhost:5173",
-      "https://vibeveil-git-main-kushs-projects-1c4830b0.vercel.app"
+      "https://vibeveil-git-main-kushs-projects-1c4830b0.vercel.app", 
+      "https://vibeveil.vercel.app"
     ],
     methods: ["GET", "POST"],
     credentials: true
