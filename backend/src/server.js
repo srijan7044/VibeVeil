@@ -18,7 +18,8 @@ app.use(express.json({ limit: "5mb" })); // req.body
 app.use(cors({
   origin: [
     "http://localhost:5173",
-    "https://vibeveil-git-main-kushs-projects-1c4830b0.vercel.app"
+    "https://vibeveil-git-main-kushs-projects-1c4830b0.vercel.app",
+    "https://vibeveil.vercel.app"
   ],
   credentials: true
 }));
